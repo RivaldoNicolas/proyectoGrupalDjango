@@ -16,6 +16,10 @@ def iniciarSesion(request):
 def registrarse(request):
     return render(request,"registrarse.html")
 
+def dashword(request):
+    return render(request,'dashword.html')
+
+
 #EJEMPLO RENDERIZAR UNA DICCIONARIO EN UNA LISTA
 # def usuariosVista(request):
 #     listarUsuarios = Usuarios.objects.all()

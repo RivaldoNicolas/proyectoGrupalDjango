@@ -1,0 +1,50 @@
+<!-- heredando el contenido base -->
+{% extends 'base.html' %}
+<!-- titulo de esta pagina -->
+{% block title %} Dashboard {% endblock %}
+<!-- contenido de esta pagina -->
+{% block registrar %}
+<h1>hola</h1>
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <!-- darle la bienvenida al usuario -->
+    <div class="jumbotron text-center">
+        <h1 class="display-4">¡Bienvenido, {{ user.nombre }}!</h1>
+        <p class="lead">¡Qué alegría tenerte de vuelta!</p>
+        <hr class="my-4">
+        <div class="row justify-content-center">
+            <!-- dirigir productos -->
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ver Productos</h5>
+                        <p class="card-text">Explora nuestra selección de productos.</p>
+                        <a href="/productos" class="btn btn-primary">Ver Productos</a>
+                    </div>
+                </div>
+            </div>
+            <!-- dirigir a carrito -->
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ver Carrito</h5>
+                        <p class="card-text">Revisa los productos que has añadido al carrito.</p>
+                        <a href="/carrito" class="btn btn-warning">Ver Carrito</a>
+                    </div>
+                </div>
+            </div>
+            <!-- dirigir a cerrar sesión -->
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Cerrar Sesión</h5>
+                        <p class="card-text">Cierra tu sesión actual.</p>
+                        <a href="#" class="btn btn-danger">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

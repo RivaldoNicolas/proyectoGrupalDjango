@@ -1,1 +1,152 @@
 {% extends 'base.html' %}
+<!-- titulo mostrado en esta pagina -->
+{% block title %} Página de Inicio - El Borracho Fiel {% endblock %}
+<!-- contenido de esta pagina -->
+{% block content %}
+<main>
+    <!-- Sección de inicio de mi pagina  -->
+    <section id="inicio" class="hero hero-bg p-lg-5">
+        <div class="container p-lg-5">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-12 text-center text-lg-center p-2">
+                    <div class="hero-content">
+                        <h1>Bienvenidos <span class="text-warning" id="dynamicPart"></span></h1>
+                        <p class="lead">
+                            La mejor selección de bebidas y momentos inolvidables.
+                        </p>
+                        <a href="{% url 'productos' %}" class="btn btn-primary">comprar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function changeText(newText) {
+                const textElement = document.getElementById("dynamicText");
+                textElement.textContent = newText;
+            }
+            // Lista de textos para cambiar dinámicamente
+            const texts = [
+                "El borracho Fiel",
+                "Disfrute de Bebidas",
+            ];
+            let index = 0;
+
+            function changeDynamicPart() {
+                const dynamicPart = document.getElementById("dynamicPart");
+                dynamicPart.textContent = texts[index];
+                index = (index + 1) % texts.length; // Ciclar a través de los textos
+            }
+
+            // Cambiar el texto cada 3 segundos
+            setInterval(changeDynamicPart, 2000);
+        </script>
+    </section>
+
+    <!-- Sección de nosotros -->
+    <section id="nosotros" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img width="550px" height="280px"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQba10AtJRJwCB1frnrh23UkaSK0FlfPY9774wwEpz42I1bPZGwhOTfCTxUwppqOwwEVJQ&usqp=CAU"
+                        class="img rounded" alt="Imagen de Nosotros" />
+                </div>
+                <div class="col-md-6">
+                    <h2 class="mb-4">¿Quiénes Somos?</h2>
+                    <p>
+                        Somos una empresa dedicada a ofrecer la mejor variedad de bebidas
+                        alcohólicas y no alcohólicas. Nuestra misión es proporcionar
+                        momentos de disfrute y calidad a nuestros clientes.
+                    </p>
+                    <p>
+                        Con más de 10 años en el mercado, nos destacamos por nuestra
+                        atención personalizada y productos de alta calidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de muestra de productos en la pagina inicio -->
+    <section id="productos" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 text-white">Nuestros Mejores Productos</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://res.cloudinary.com/riqra/image/upload/v1668553089/sellers/6/uxfhqjztn5scqnkxrbyx.jpg"
+                            class="card-img-top" alt="Producto 1" />
+                        <div class="card-body">
+                            <h5 class="card-title">CORONA</h5>
+                            <p class="card-text">Cerveza CORONA Extra Botella 330ml 6 Pack</p>
+                            <p class="card-text text-primary font-weight-bold">Precio: S/.29.90</p>
+                            <a href="{% url 'productos' %}" class="btn btn-success">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img height="360px"
+                            src="https://conexion360.mx/wp-content/uploads/2020/03/FOTO-WEB-MODELO-TRIGO-2.jpg"
+                            class="card-img-top" alt="Producto 2" />
+                        <div class="card-body">
+                            <h5 class="card-title">CUSQUEÑA</h5>
+                            <p class="card-text">Cerveza CUSQUEÑA Dorada Botella 310ml Paquete 6un</p>
+                            <p class="card-text text-primary font-weight-bold">Precio: S/.22.50</p>
+                            <a href="{% url 'productos' %}" class="btn btn-success">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="https://s7d2.scene7.com/is/image/TottusPE/42372253_1?wid=800&hei=800&qlt=70"
+                            class="card-img-top" alt="Producto 3" />
+                        <div class="card-body">
+                            <h5 class="card-title">CUSQUEÑA</h5>
+                            <p class="card-text">Cerveza CUSQUEÑA Malta Pack 6 Botella 310ml</p>
+                            <p class="card-text text-primary font-weight-bold">Precio: S/.22.90</p>
+                            <a href="{% url 'productos' %}" class="btn btn-success">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Sección Contacto -->
+    <section id="contactos" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Contáctanos</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" method="post">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <h4>Visítanos</h4>
+                    <p>Av. Principal 123, Ciudad, País</p>
+                    <h4>Llámanos</h4>
+                    <p>+123 456 789</p>
+                    <h4>Horario de Atención</h4>
+                    <p>Lunes a Viernes: 9am - 6pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
