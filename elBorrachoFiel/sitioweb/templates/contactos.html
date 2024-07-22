@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}
+Página Contacto
+{% endblock %}
+
+{% block content %}
+<!-- Sección Contacto -->
+<section id="contactos" class="py-5 bg-light">
+    <div class="container p-5">
+        <h2 class="text-center mb-4">Contáctanos</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <form action="#" method="post">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h4>Visítanos</h4>
+                <p>Av. Principal 123, Ciudad, País</p>
+                <div class="mb-3">
+                    <div class="map-responsive">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3950.038295928216!2d-75.01237612671756!3d-8.379888388077658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91b38c6b6b3d9de1%3A0x3030e95b7e75a259!2sPadre%20Abad%2C%20Aguaytia%2C%20Ucayali%2C%20Per%C3%BA!5e0!3m2!1sen!2sus!4v1625239256364!5m2!1sen!2sus"
+                            width="100%" height="300" frameborder="0" style="border:0" allowfullscreen=""
+                            aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+                <h4>Llámanos</h4>
+                <p>+123 456 789</p>
+                <h4>Horario de Atención</h4>
+                <p>Lunes a Viernes: 9am - 6pm</p>
+                <h4>Síguenos</h4>
+                <div class="d-flex">
+                    <a href="#" class="me-2">
+                        <i class="fab fa-facebook fa-2x"></i>
+                    </a>
+                    <a href="#" class="me-2">
+                        <i class="fab fa-twitter fa-2x"></i>
+                    </a>
+                    <a href="#" class="me-2">
+                        <i class="fab fa-instagram fa-2x"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

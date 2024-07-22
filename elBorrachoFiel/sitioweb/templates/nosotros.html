@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}
+Nosotros
+{% endblock %}
+
+{% block content %}
+<!-- Sección de Nosotros -->
+<section id="nosotros" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">¿Quiénes Somos?</h2>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <img width="550px" height="280px"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQba10AtJRJwCB1frnrh23UkaSK0FlfPY9774wwEpz42I1bPZGwhOTfCTxUwppqOwwEVJQ&usqp=CAU"
+                    class="img-fluid rounded" alt="Imagen de Nosotros" />
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3">Nuestra Historia</h3>
+                <p>
+                    Somos una empresa dedicada a ofrecer la mejor variedad de bebidas
+                    alcohólicas y no alcohólicas. Nuestra misión es proporcionar
+                    momentos de disfrute y calidad a nuestros clientes.
+                </p>
+                <p>
+                    Con más de 10 años en el mercado, nos destacamos por nuestra
+                    atención personalizada y productos de alta calidad.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3">Nuestros Valores</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Calidad:</strong> Ofrecemos productos de la más alta calidad.
+                    </li>
+                    <li class="list-group-item"><strong>Innovación:</strong> Estamos en constante búsqueda de nuevos
+                        productos y tendencias.</li>
+                    <li class="list-group-item"><strong>Servicio:</strong> Nuestro equipo está dedicado a brindar la
+                        mejor atención a nuestros clientes.</li>
+                    <li class="list-group-item"><strong>Sostenibilidad:</strong> Nos comprometemos con prácticas
+                        sostenibles y responsables.</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3">Nuestro Equipo</h3>
+                <p>
+                    Contamos con un equipo de profesionales altamente capacitados y apasionados por lo que hacen. Desde
+                    nuestros
+                    sommeliers hasta nuestro personal de atención al cliente, todos trabajamos juntos para garantizar
+                    una
+                    experiencia excepcional para nuestros clientes.
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h3 class="text-center mb-3">Testimonios</h3>
+                <div id="testimoniosCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <blockquote class="blockquote text-center">
+                                <p class="mb-0">"Excelente servicio y productos de alta calidad. ¡Altamente
+                                    recomendable!"</p>
+                                <footer class="blockquote-footer">Juan Pérez</footer>
+                            </blockquote>
+                        </div>
+                        <div class="carousel-item">
+                            <blockquote class="blockquote text-center">
+                                <p class="mb-0">"La mejor tienda de bebidas que he encontrado. Gran variedad y atención
+                                    personalizada."</p>
+                                <footer class="blockquote-footer">María López</footer>
+                            </blockquote>
+                        </div>
+                        <div class="carousel-item">
+                            <blockquote class="blockquote text-center">
+                                <p class="mb-0">"Productos increíbles y un servicio al cliente excepcional. ¡Muy
+                                    satisfecho!"</p>
+                                <footer class="blockquote-footer">Carlos García</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#testimoniosCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#testimoniosCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

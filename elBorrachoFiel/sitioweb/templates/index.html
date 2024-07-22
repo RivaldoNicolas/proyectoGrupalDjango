@@ -2,6 +2,10 @@
 <!-- titulo mostrado en esta pagina -->
 {% block title %} Página de Inicio - El Borracho Fiel {% endblock %}
 <!-- contenido de esta pagina -->
+{% block registrar %}
+<a href="{% url 'paginaLogin' %}" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+<a href="{% url 'PaginaNuevoCliente' %}" class="btn btn-outline-light">Registrarse</a>
+{% endblock %}
 {% block content %}
 <main>
     <!-- Sección de inicio de mi pagina  -->
@@ -47,7 +51,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img width="550px" height="280px"
+                    <img width="300px" height="280px"
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQba10AtJRJwCB1frnrh23UkaSK0FlfPY9774wwEpz42I1bPZGwhOTfCTxUwppqOwwEVJQ&usqp=CAU"
                         class="img rounded" alt="Imagen de Nosotros" />
                 </div>

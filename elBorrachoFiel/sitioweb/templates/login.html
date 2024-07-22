@@ -4,8 +4,8 @@
 {% block title %} Login al Sitio {% endblock %}
 <!-- contenido de esta pagina -->
 {% block registrar %}
-<a href="{% url 'iniciarSesion' %}" class="btn btn-outline-light me-2">Iniciar Sesión</a>
-<a href="{% url 'registrarse' %}" class="btn btn-outline-light">Registrarse</a>
+<a href="{% url 'paginaLogin' %}" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+<a href="{% url 'PaginaNuevoCliente' %}" class="btn btn-outline-light">Registrarse</a>
 {% endblock %}
 {% block content %}
 <div class="container mt-5 pt-5">
@@ -15,12 +15,13 @@
                 <div class="card-body p-5">
                     <!-- formulario de inicio de sesión -->
                     <h2 class="card-title text-center mb-4" style="font-size: 40px;">Iniciar Sesión</h2>
-                    <form action="" method="POST">
+                    <form method="POST">
+                        {% csrf_token %}
                         <div class="mb-4">
                             <!-- ingresar email -->
                             <label for="email" class="form-label">Email</label>
                             <div class="input-group">
-                                <input type="email" class="form-control form-control-lg" id="email" name="correo"
+                                <input type="text" class="form-control form-control-lg" id="email" name="username"
                                     placeholder="Email" required />
                                 <span class="input-group-text">
                                     <i class="bi bi-envelope-fill"></i>
@@ -32,7 +33,7 @@
                             <label for="password" class="form-label">Contraseña</label>
                             <div class="input-group">
                                 <input type="password" class="form-control form-control-lg" id="password"
-                                    name="contrasena" placeholder="Contraseña" required />
+                                    name="password" placeholder="Contraseña" required />
                                 <span class="input-group-text">
                                     <i class="bi bi-lock-fill"></i>
                                 </span>
@@ -54,7 +55,7 @@
                         </div>
                         <!-- redireccion a registrarse -->
                         <div class="text-center mt-4">
-                            <p class="mb-0">No tengo Cuenta <a href="{% url 'registrarse' %}"
+                            <p class="mb-0">No tengo Cuenta <a href="{% url 'PaginaNuevoCliente' %}"
                                     class="text-decoration-none">Crear
                                     una</a></p>
                         </div>

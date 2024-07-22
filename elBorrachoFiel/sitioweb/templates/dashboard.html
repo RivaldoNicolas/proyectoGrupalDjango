@@ -4,7 +4,8 @@
 {% block title %} Dashboard {% endblock %}
 <!-- contenido de esta pagina -->
 {% block registrar %}
-<h1>hola</h1>
+<a href="{% url 'paginaLogin' %}" class="btn btn-outline-light me-2">Iniciar Sesión</a>
+<a href="{% url 'SalirCliente' %}" class="btn btn-outline-light">Cerrar Sesion</a>
 {% endblock %}
 {% block content %}
 <div class="container mt-5">
@@ -35,12 +36,13 @@
                 </div>
             </div>
             <!-- dirigir a cerrar sesión -->
+            <!-- dirigir a carrito -->
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Cerrar Sesión</h5>
-                        <p class="card-text">Cierra tu sesión actual.</p>
-                        <a href="#" class="btn btn-danger">Cerrar Sesión</a>
+                        <h5 class="card-title">Ver Carrito</h5>
+                        <p class="card-text">Revisa los productos que has añadido al carrito.</p>
+                        <a href="{% url 'paginaRegistroCliente' %}" class="btn btn-warning">Completar Registro </a>
                     </div>
                 </div>
             </div>

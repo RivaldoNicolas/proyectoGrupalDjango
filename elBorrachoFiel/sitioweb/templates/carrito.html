@@ -1,0 +1,63 @@
+<!-- heredando la platilla base -->
+{% extends 'base.html' %}
+<!-- titulo de esta pagina carrito -->
+{% block title %} Carrito de Compras {% endblock %}
+<!-- contenido de la pagina carrito -->
+{% block content %}
+<div class="container mt-5 p-5">
+    <h1 class="mb-4">Carrito de Compras</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <!-- utilización de jinja para mostrar productos en el carrito -->
+            <ul class="list-group">
+                {% for entry in carrito %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">{{ entry.item.producto.nombre }}</h5>
+                        <small>Cantidad: {{ entry.item.cantidad }}</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">$ {{ entry.total_item }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- Muestra el resumen de la compra -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen de Compra</h5>
+                    <ul class="list-group">
+                        {% for entry in carrito %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ entry.item.producto.nombre }} x{{ entry.item.cantidad }}
+                            <span class="badge bg-primary rounded-pill">$ {{ entry.total_item }}</span>
+                        </li>
+                        {% endfor %}
+                        <!-- total del carrito -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>Total:</strong>
+                            <span class="badge bg-primary rounded-pill">$ {{ total }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--formulario de registro de la compra -->
+            <form action="{% url 'carrito' %}" method="post" class="mt-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="direccion_envio" class="form-label">Dirección de Envío</label>
+                    <textarea class="form-control" id="direccion_envio" name="direccion_envio" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="metodo_pago" class="form-label">Método de Pago</label>
+                    <select class="form-select" id="metodo_pago" name="metodo_pago" required>
+                        <option value="tarjeta">Tarjeta de Crédito</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
