@@ -15,6 +15,8 @@ class Registro(models.Model):
 # Modelo para información adicional del cliente
 class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.RESTRICT)
+    nombres = models.CharField(max_length=200)
+    apellidos = models.CharField(max_length=200)
     dni = models.CharField(max_length=15)
     telefono = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField(null=True)
@@ -68,3 +70,47 @@ class DetallePedido(models.Model):
 
     def __str__(self):
         return f'{self.producto.nombre} - {self.cantidad}'
+
+
+#Inicio --------------------------------------------------------------------------------------------
+class Inicio(models.Model):
+    imagenFondo = models.ImageField(upload_to='inicio/', null=True, blank=True)
+    imagenQuienesSomos = models.ImageField(upload_to='inicioQuienesSomos/', null=True, blank=True)
+    titulo = models.CharField(max_length=200)
+    subtitulo = models.CharField(max_length=200)
+    contenido = models.TextField()
+    tituloProductos = models.CharField(max_length=200)
+
+#formularioContacto
+class FormularioContacto(models.Model):
+    nombre = models.CharField(max_length=200)
+    correo = models.CharField(max_length=200)
+    mensaje = models.TextField()
+
+#ContactoSitio 
+class ContactoSitio(models.Model):
+    lugar = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=20)
+    horario_atencion = models.CharField(max_length=200)
+    mapaurl = models.URLField(max_length=200, blank=True)
+    facebook_url = models.URLField(max_length=200, blank=True)
+    instagram_url = models.URLField(max_length=200, blank=True)
+    twitter_url = models.URLField(max_length=200, blank=True)
+    whatsapp_url = models.URLField(max_length=200, blank=True)
+
+#Nosotros----------------------------------------------------------------------------------------------------
+class Nosotros(models.Model):
+    logo = models.ImageField(upload_to='nosotros/', null=True, blank=True)
+    tituloElBorrachoFiel = models.CharField(max_length=200)
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    imagenNosotros = models.ImageField(upload_to='nosotros/', null=True, blank=True)
+    valores = models.TextField()
+    equipo = models.TextField()
+
+#textimonio 
+class Testimonio(models.Model):
+    contenido = models.TextField()
+    nombrepersona = models.CharField(max_length=200)
+
+

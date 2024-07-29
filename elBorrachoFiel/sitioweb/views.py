@@ -1,23 +1,43 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.models import User
-from .models import Cliente
+from .models import Cliente,Inicio,FormularioContacto,ContactoSitio,Nosotros,Testimonio
 from django.contrib import messages
 from .models import Carrito, Pedido, DetallePedido
+from django.contrib.auth.decorators import login_required
 
 from .models import Producto
 # from django.contrib.auth.decorators import de
 # Create your views here.
 
 def inicio(request):
-    return render(request,"index.html")
+    context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
+    }
+    return render(request, "index.html", context)
 def nosotros(request):
-    return render(request,"nosotros.html")
+    nosotros = Nosotros.objects.first()  # Assuming you have only one Nosotros object
+    testimonios = Testimonio.objects.all()
+    cotacto_sitio = ContactoSitio.objects.first()
+    return render(request, "nosotros.html", {'nosotros': nosotros, 'testimonios': testimonios, 'contacto_sitio': cotacto_sitio})
 
+@login_required
 def productos(request):
+    cotacto_sitio = ContactoSitio.objects.first()
+    nosotros = Nosotros.objects.first()
     if request.method == 'POST':
         producto_id = request.POST.get('producto_id')
         cantidad = int(request.POST.get('cantidad', 1))
+
+        if not request.user.is_authenticated:
+            messages.error(request, 'Debes iniciar sesión para agregar productos al carrito.')
+            return redirect('login')  # Asegúrate de que la URL 'login' esté configurada
 
         producto = Producto.objects.get(id=producto_id)
 
@@ -36,11 +56,26 @@ def productos(request):
         return redirect('carrito')  # Asegúrate de que la URL 'carrito' esté configurada
 
     listarProducto = Producto.objects.all()
-    return render(request, "productos.html", {'productos': listarProducto})
-def contactos(request):
-    return render(request,"contactos.html")
+    return render(request, "productos.html", {'productos': listarProducto , 'contacto_sitio': cotacto_sitio , 'nosotros': nosotros})
 
+
+def contactos(request):
+    cotacto_sitio_yo = ContactoSitio.objects.first()
+    nosotros = Nosotros.objects.first()
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        correo = request.POST.get('correo')
+        mensaje = request.POST.get('mensaje')
+        FormularioContacto.objects.create(nombre=nombre, correo=correo, mensaje=mensaje)
+        return redirect('contactos')  # Redirect after successful form submission
+
+    contacto_sitio = ContactoSitio.objects.first()  # Assuming you have only one ContactoSitio object
+    return render(request, "contactos.html", {'contacto_sitio': contacto_sitio, 'cotacto_sitio_yo': cotacto_sitio_yo, 'nosotros': nosotros})
+
+
+@login_required
 def carrito(request):
+    
     usuario = request.user
 
     # Obtenemos los elementos del carrito del usuario
@@ -89,66 +124,149 @@ def carrito(request):
         
         messages.success(request, 'Compra realizada con éxito.')
         return redirect('inicio')  # Asegúrate de que la URL 'inicio' esté configurada
-
     context = {
         'carrito': carrito_con_totales,
         'total': total_carrito,
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
     }
 
     return render(request, 'carrito.html', context)
+
+
+
+@login_required
 def dashword(request):
     return render(request,'dashword.html')
 
 def vistaLogin(request):
-    if request.method=='POST':
+    context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
+    }
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        usuarios = authenticate(request,username=username,password=password)
-        if usuarios is not None:
-            login(request,usuarios)
+        usuario = authenticate(request, username=username, password=password)
+        if usuario is not None:
+            login(request, usuario)
+            messages.success(request, 'Inicio de sesión exitoso.')
             return redirect('cuentaCliente')
         else:
-            return redirect('login',{'error':'datos incorrectos'})
-    return render(request,"login.html")
+            messages.error(request, 'Datos incorrectos. Por favor, intente nuevamente.')
+            return redirect('paginaLogin')
+
+    return render(request, "login.html" , context)
 
 def crearUsuario(request):
+    context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
+    }
     if request.method == "POST":
         formUsuario = request.POST.get("nuevoCliente")
         formPassword = request.POST.get("nuevaClave")
-        insertarCliente= User.objects.create_user(username=formUsuario,password=formPassword)
-        if insertarCliente is not None:
-            login( request,insertarCliente)
-            return redirect("cuentaCliente")
-    return render(request,"registrar.html")
+        
+        if formUsuario and formPassword:
+            try:
+                # Crear un nuevo usuario
+                insertarCliente = User.objects.create_user(username=formUsuario, password=formPassword)
+                login(request, insertarCliente)
+                messages.success(request, 'Registro exitoso. Bienvenido!')
+                return redirect('cuentaCliente')
+            except Exception as e:
+                # Manejar cualquier excepción (por ejemplo, nombre de usuario ya existe)
+                messages.error(request, 'Error al registrar el usuario. Por favor, intente nuevamente.')
+                return redirect('paginaRegistroCliente')
+        else:
+            messages.error(request, 'Por favor, complete todos los campos.')
+            return redirect('paginaRegistroCliente')
 
-def salirUsuario(request):
-    logout(request)
-    return render(request,"index.html")
-
-def cuentaCliente(request):
-   return render(request, 'dashboard.html')
-
-
-from django.contrib.auth.decorators import login_required
+    return render(request, "registrar.html" , context)
 
 
 @login_required
+def salirUsuario(request):
+    logout(request)
+    context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
+    }
+    return render(request, "index.html", context)
+
+@login_required
+def cuentaCliente(request):
+   context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'cliente': Cliente.objects.first(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]  # Get the first 3 products
+    }
+   return render(request, 'dashboard.html' ,context)
+
+@login_required
 def registrarCliente(request):
+    context = {
+        'inicio': Inicio.objects.all(),
+        'formulario_contacto': FormularioContacto.objects.all(),
+        'contacto_sitio': ContactoSitio.objects.first(),
+        'cliente': Cliente.objects.all(),
+        'nosotros': Nosotros.objects.first(),
+        'testimonio': Testimonio.objects.all(),
+        'productos': Producto.objects.all()[:9]
+    }
     if request.method == "POST":
-        formDni = request.POST.get('dni')
-        formTelefono = request.POST.get('telefono')
-        formFechaNacimiento = request.POST.get('fecha_nacimiento')
-        formDireccion = request.POST.get('direccion')
+        nombres = request.POST.get('nombres')
+        apellidos = request.POST.get('apellidos')
+        dni = request.POST.get('dni')
+        telefono = request.POST.get('telefono')
+        fecha_nacimiento = request.POST.get('fecha_nacimiento')
+        direccion = request.POST.get('direccion')
 
-        # Crear un nuevo registro de Cliente
-        insertarRegistro = Cliente(
-            usuario=request.user,
-            dni=formDni,
-            telefono=formTelefono,
-            fecha_nacimiento=formFechaNacimiento,
-            direccion=formDireccion
-        )
-        insertarRegistro.save()
-        return redirect('cuentaCliente')  # Asegúrate de tener definida esta URL
+        if nombres and apellidos and dni and telefono and fecha_nacimiento and direccion:
+            try:
+                insertarRegistro = Cliente(
+                    usuario=request.user,
+                    nombres=nombres,
+                    apellidos=apellidos,
+                    dni=dni,
+                    telefono=telefono,
+                    fecha_nacimiento=fecha_nacimiento,
+                    direccion=direccion
+                )
+                insertarRegistro.save()
+                messages.success(request, 'Registro de cliente exitoso.')
+                return redirect('cuentaCliente')
+            except Exception as e:
+                messages.error(request, 'Error al registrar el cliente. Por favor, intente nuevamente.')
+                return redirect('paginaRegistroCliente')
+        else:
+            messages.error(request, 'Por favor, complete todos los campos.')
+            return redirect('paginaRegistroCliente')
 
-    return render(request, "cliente.html")
+    return render(request, "cliente.html", context)

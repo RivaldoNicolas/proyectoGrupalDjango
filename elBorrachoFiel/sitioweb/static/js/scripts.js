@@ -1,0 +1,1 @@
+   // MENSAJE SCRIP BASE
